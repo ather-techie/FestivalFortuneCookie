@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Festival Fortune</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="logo">Festival Fortune</div>
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-view="home">Home</button>
+        <button class="nav-tab" data-view="journal">Journal</button>
+        <button class="nav-tab" data-view="settings">Settings</button>
+      </nav>
+    </header>
+
+    <main id="view-home" class="view active">
+      <section class="hero">
+        <h1>Crack your fortune</h1>
+        <p class="hero-sub">One cookie per day. One truth per cookie.</p>
+      </section>
+      <section class="festival-grid" id="festival-grid"></section>
+
+      <section id="crack-stage" class="crack-stage hidden">
+        <button class="back-btn" id="back-from-crack">&larr; Back</button>
+        <div class="crack-instruction">Hold to crack your <span id="crack-festival-name"></span> cookie</div>
+        <div class="vessel-container" id="vessel-container">
+          <div class="vessel" id="vessel">
+            <svg viewBox="0 0 200 120" id="vessel-svg" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="100" cy="60" rx="80" ry="45" fill="#d4a574" stroke="#8b6914" stroke-width="3"/>
+              <path d="M 30 60 Q 100 30 170 60" fill="none" stroke="#8b6914" stroke-width="2" opacity="0.4"/>
+              <path d="M 40 70 Q 100 45 160 70" fill="none" stroke="#8b6914" stroke-width="1.5" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="hold-indicator" id="hold-indicator">
+            <div class="hold-bar"><div class="hold-fill" id="hold-fill"></div></div>
+          </div>
+        </div>
+        <canvas id="particle-canvas" class="particle-canvas"></canvas>
+      </section>
+
+      <section id="reveal-stage" class="reveal-stage hidden">
+        <button class="back-btn" id="back-from-reveal">&larr; Back</button>
+        <div class="fortune-card" id="fortune-card">
+          <div class="card-accent" id="card-accent"></div>
+          <div class="card-festival-badge" id="card-festival-badge"></div>
+          <div class="card-rarity" id="card-rarity"></div>
+          <div class="card-fortune-text" id="card-fortune-text"></div>
+          <div class="card-date" id="card-date"></div>
+          <div class="card-divider"></div>
+          <div class="card-footer">Festival Fortune</div>
+        </div>
+        <div class="reveal-actions">
+          <button class="btn-primary" id="btn-share">Share</button>
+          <button class="btn-secondary" id="btn-save">Save to Journal</button>
+          <button class="btn-ghost" id="btn-again">Crack Another</button>
+        </div>
+        <canvas id="share-canvas" class="share-canvas hidden"></canvas>
+      </section>
+    </main>
+
+    <main id="view-journal" class="view">
+      <section class="journal-header">
+        <h2>Your Fortune Journal</h2>
+        <p class="journal-count" id="journal-count">0 fortunes collected</p>
+        <div class="journal-filters" id="journal-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+        </div>
+      </section>
+      <section class="journal-list" id="journal-list"></section>
+    </main>
+
+    <main id="view-settings" class="view">
+      <section class="settings-section">
+        <h2>Settings</h2>
+        <div class="setting-item">
+          <label for="birth-year">Birth Year</label>
+          <input type="number" id="birth-year" min="1900" max="2026" placeholder="1990">
+          <p class="setting-hint">Used for age-aware birthday fortunes</p>
+        </div>
+        <div class="setting-item">
+          <button class="btn-danger" id="btn-clear-journal">Clear Journal</button>
+          <p class="setting-hint warning">This cannot be undone</p>
+        </div>
+        <div class="setting-item">
+          <label>About</label>
+          <p class="setting-hint">Festival Fortune v1.0 &mdash; One cookie per day. One truth per cookie.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+  <script src="share.js"></script>
+</body>
+</html>

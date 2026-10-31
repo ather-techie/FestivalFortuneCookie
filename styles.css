@@ -1,0 +1,115 @@
+/* ===== Festival Fortune — Base Styles ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f0a1a;--surface:#1a1230;--surface2:#241945;--text:#e8dcc4;--muted:#9a8c7a;--accent:#ff6b35;--accent2:#ffd93d;--radius:16px;--font-body:'Georgia',serif;--font-ui:'Segoe UI','Helvetica Neue',sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden}
+
+/* ===== Header ===== */
+.app-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font-family:var(--font-ui);font-size:1.1rem;font-weight:700;letter-spacing:.05em;color:var(--accent2)}
+.nav-tabs{display:flex;gap:.5rem}
+.nav-tab{background:none;border:none;color:var(--muted);font-family:var(--font-ui);font-size:.85rem;padding:.4rem .8rem;border-radius:8px;cursor:pointer;transition:all .2s}
+.nav-tab:hover,.nav-tab.active{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-tab.active{color:var(--accent2)}
+
+/* ===== Views ===== */
+.view{display:none;padding:2rem 1.5rem;max-width:800px;margin:0 auto}
+.view.active{display:block}
+
+/* ===== Hero ===== */
+.hero{text-align:center;margin-bottom:2.5rem}
+.hero h1{font-size:2rem;margin-bottom:.5rem}
+.hero-sub{color:var(--muted);font-size:.95rem}
+
+/* ===== Festival Grid ===== */
+.festival-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.festival-card{background:var(--surface);border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:all .25s;border:1px solid rgba(255,255,255,.04);position:relative;overflow:hidden}
+.festival-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.festival-card.locked{opacity:.4;pointer-events:none}
+.festival-card.today{border-color:var(--accent)}
+.festival-emoji{font-size:2.5rem;margin-bottom:.6rem}
+.festival-name{font-family:var(--font-ui);font-weight:600;font-size:1rem;margin-bottom:.25rem}
+.festival-date{font-size:.8rem;color:var(--muted);margin-bottom:.5rem}
+.festival-status{font-family:var(--font-ui);font-size:.75rem;padding:.2rem .5rem;border-radius:6px;display:inline-block}
+.festival-status.available{background:rgba(255,107,53,.15);color:var(--accent)}
+.festival-status.cracked{background:rgba(100,200,100,.12);color:#64c864}
+.festival-status.upcoming{background:rgba(255,255,255,.06);color:var(--muted)}
+
+/* ===== Crack Stage ===== */
+.crack-stage{text-align:center;position:relative}
+.crack-instruction{font-family:var(--font-ui);font-size:.9rem;color:var(--muted);margin-bottom:2rem}
+.vessel-container{position:relative;display:inline-block;margin-bottom:2rem}
+.vessel{width:220px;height:140px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform .1s}
+.vessel.holding{transform:scale(1.05)}
+.vessel.cracked{animation:crackShake .4s ease-out}
+@keyframes crackShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-6deg) scale(1.1)}40%{transform:rotate(5deg)}60%{transform:rotate(-3deg)}80%{transform:rotate(2deg)}}
+.hold-indicator{margin-top:1rem}
+.hold-bar{width:200px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.hold-fill{height:100%;width:0%;background:var(--accent);border-radius:3px;transition:width .05s linear}
+.particle-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10}
+
+/* ===== Reveal Stage ===== */
+.reveal-stage{text-align:center}
+.fortune-card{background:var(--surface);border-radius:var(--radius);padding:2.5rem 2rem;position:relative;overflow:hidden;max-width:500px;margin:0 auto 2rem;border:1px solid rgba(255,255,255,.06);animation:cardAppear .6s cubic-bezier(.22,1,.36,1)}
+@keyframes cardAppear{from{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:none}}
+.card-accent{position:absolute;top:0;left:0;right:0;height:4px}
+.card-festival-badge{font-family:var(--font-ui);font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.card-rarity{font-family:var(--font-ui);font-size:.8rem;font-weight:600;padding:.2rem .6rem;border-radius:6px;display:inline-block;margin-bottom:1.25rem}
+.card-rarity.common{background:rgba(200,200,200,.1);color:#bbb}
+.card-rarity.uncommon{background:rgba(100,200,100,.12);color:#64c864}
+.card-rarity.rare{background:rgba(100,150,255,.12);color:#6496ff}
+.card-rarity.legendary{background:rgba(255,200,50,.15);color:var(--accent2)}
+.card-fortune-text{font-size:1.15rem;line-height:1.7;margin-bottom:1.5rem}
+.card-date{font-size:.75rem;color:var(--muted)}
+.card-divider{height:1px;background:rgba(255,255,255,.06);margin:1.5rem 0}
+.card-footer{font-family:var(--font-ui);font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+
+/* ===== Buttons ===== */
+.reveal-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.btn-primary,.btn-secondary,.btn-ghost,.btn-danger{font-family:var(--font-ui);font-size:.85rem;padding:.65rem 1.5rem;border-radius:10px;border:none;cursor:pointer;transition:all .2s;font-weight:500}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#e55a28}
+.btn-secondary{background:rgba(255,255,255,.08);color:var(--text)}
+.btn-secondary:hover{background:rgba(255,255,255,.12)}
+.btn-ghost{background:none;color:var(--muted);border:1px solid rgba(255,255,255,.1)}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.btn-danger{background:rgba(255,60,60,.12);color:#ff6464}
+.btn-danger:hover{background:rgba(255,60,60,.2)}
+
+/* ===== Journal ===== */
+.journal-header{margin-bottom:2rem}
+.journal-header h2{margin-bottom:.25rem}
+.journal-count{color:var(--muted);font-size:.85rem;margin-bottom:1rem}
+.journal-filters{display:flex;gap:.4rem;flex-wrap:wrap}
+.filter-btn{background:none;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:var(--font-ui);font-size:.75rem;padding:.3rem .7rem;border-radius:6px;cursor:pointer}
+.filter-btn.active,.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.journal-list{display:flex;flex-direction:column;gap:.75rem}
+.journal-entry{background:var(--surface);border-radius:12px;padding:1.25rem;border:1px solid rgba(255,255,255,.04)}
+.journal-entry-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.journal-entry-festival{font-family:var(--font-ui);font-size:.8rem;color:var(--muted)}
+.journal-entry-text{font-size:.95rem;line-height:1.6}
+.journal-empty{text-align:center;color:var(--muted);padding:3rem 1rem;font-size:.9rem}
+
+/* ===== Settings ===== */
+.settings-section{max-width:400px}
+.settings-section h2{margin-bottom:1.5rem}
+.setting-item{margin-bottom:1.5rem}
+.setting-item label{font-family:var(--font-ui);font-size:.85rem;font-weight:600;display:block;margin-bottom:.4rem}
+.setting-item input[type=number]{width:100%;padding:.6rem .8rem;background:var(--surface);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--text);font-family:var(--font-ui);font-size:.9rem}
+.setting-hint{font-size:.8rem;color:var(--muted);margin-top:.3rem}
+.setting-hint.warning{color:#ff6464}
+
+/* ===== Toast ===== */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--surface2);color:var(--text);padding:.75rem 1.5rem;border-radius:10px;font-family:var(--font-ui);font-size:.85rem;z-index:100;animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* ===== Utility ===== */
+.hidden{display:none!important}
+.share-canvas{position:fixed;top:-9999px;left:-9999px}
+
+/* ===== Responsive ===== */
+@media(max-width:600px){
+  .festival-grid{grid-template-columns:1fr}
+  .hero h1{font-size:1.6rem}
+  .fortune-card{padding:1.75rem 1.25rem}
+  .card-fortune-text{font-size:1.05rem}
+}
