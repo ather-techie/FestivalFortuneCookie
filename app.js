@@ -305,10 +305,8 @@ function showReveal(fortune) {
 
   // Store for share
   state.currentFortune = fortune;
-  // Show saved state label; hide interactive save button if present
-  const saveBtn = document.getElementById('btn-save');
+  // Show saved state label
   const saveStatus = document.getElementById('save-status');
-  if (saveBtn) saveBtn.style.display = 'none';
   if (saveStatus) saveStatus.classList.remove('hidden');
 
   // Hide "Crack Another" when user already cracked today
