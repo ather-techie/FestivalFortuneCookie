@@ -6,7 +6,9 @@ function nextOccurrence(now, f) {
   const start = festivalDate(now, f, f.startMonth, f.startDay);
   const end = festivalDate(now, f, f.endMonth, f.endDay);
   if (end < start) end.setFullYear(end.getFullYear() + 1);
-  if (end < now) start.setFullYear(start.getFullYear() + 1);
+  const closeDate = new Date(end);
+  closeDate.setDate(closeDate.getDate() + (f.lateDays || 0));
+  if (closeDate < now) start.setFullYear(start.getFullYear() + 1);
   return start;
 }
 function isFestivalActive(now, f) {
@@ -53,6 +55,28 @@ for (const [[y, m, d], label] of cases) {
     console.log(`  ${f.key.padEnd(10)} ${active ? 'ACTIVE' : 'closed'} | opens in ${days} days`);
     if (!active && days === 0) { console.log(`    ^ BUG: closed but countdown says 0 days`); failures++; }
   }
+}
+
+// Boundary assertions: after-window must stay open through end+lateDays, close the day after.
+function endPlusDays(now, f, n) {
+  const end = festivalDate(now, f.endMonth, f.endDay);
+  end.setDate(end.getDate() + n);
+  return end;
+}
+for (const f of F.filter(x => x.lateDays > 0)) {
+  const probe = todayAt(2026, 11, 2); // Diwali ends Nov 5; use Halloween-style generic probe below
+}
+{
+  const now = todayAt(2026, 11, 2);
+  const h = F.find(f => f.key === 'halloween');
+  const diw = F.find(f => f.key === 'diwali');
+  // Halloween official end: Oct 31. lateDays 7 -> closes Nov 7.
+  if (!isFestivalActive(todayAt(2026, 11, 1), h)) { console.log('BUG: Halloween should stay ACTIVE on Nov 1 (late window)'); failures++; }
+  if (isFestivalActive(todayAt(2026, 11, 8), h)) { console.log('BUG: Halloween should be CLOSED on Nov 8 (end+7+1)'); failures++; }
+  if (!isFestivalActive(todayAt(2026, 11, 7), h)) { console.log('BUG: Halloween should stay ACTIVE through Nov 7 (end+lateDays)'); failures++; }
+  // Diwali official end: Nov 5. lateDays 7 -> closes Nov 12.
+  if (!isFestivalActive(todayAt(2026, 11, 12), diw)) { console.log('BUG: Diwali should stay ACTIVE through Nov 12 (end+lateDays)'); failures++; }
+  if (isFestivalActive(todayAt(2026, 11, 13), diw)) { console.log('BUG: Diwali should be CLOSED on Nov 13 (end+7+1)'); failures++; }
 }
 console.log(failures === 0 ? '\nAll checks passed.' : `\n${failures} BUG(S) FOUND`);
 process.exit(failures === 0 ? 0 : 1);

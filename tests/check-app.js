@@ -63,6 +63,11 @@ function checkApp() {
   assert(app.includes("region: 'Worldwide'"), 'app.js: region field missing from festival registry');
   assert(css.includes('.festival-region'), 'styles.css: region tag styles missing');
 
+  // Grace periods: earlyDays before start, lateDays after end
+  assert(app.includes('earlyDays'), 'app.js: earlyDays grace field missing');
+  assert(app.includes('lateDays'), 'app.js: lateDays grace field missing');
+  assert(app.includes('Last chance'), 'app.js: after-window badge missing');
+
   // OG images directory
   const ogDir = path.join(__dirname, '..', 'og-images');
   assert(fs.existsSync(ogDir), 'og-images directory missing');

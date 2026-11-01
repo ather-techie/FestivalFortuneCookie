@@ -93,13 +93,24 @@ function daysUntilOfficialStart(f) {
   return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
 }
 
-// The next date this festival actually begins (this year, or next year if this year's window has passed).
+// Official end date of the current occurrence (start-anchored, lateDays not included).
+function officialEndDate(f) {
+  const start = nextOccurrence(f);
+  const end = festivalDate(f, f.endMonth, f.endDay);
+  if (end < start) end.setFullYear(end.getFullYear() + 1);
+  return end;
+}
+
+// The next date this festival actually begins (this year, or next year once the
+// whole window INCLUDING the lateDays grace has passed).
 function nextOccurrence(f) {
   const now = today();
   const start = festivalDate(f, f.startMonth, f.startDay);
   const end = festivalDate(f, f.endMonth, f.endDay);
   if (end < start) end.setFullYear(end.getFullYear() + 1);
-  if (end < now) start.setFullYear(start.getFullYear() + 1);
+  const closeDate = new Date(end);
+  closeDate.setDate(closeDate.getDate() + (f.lateDays || 0));
+  if (closeDate < now) start.setFullYear(start.getFullYear() + 1);
   return start;
 }
 
@@ -202,8 +213,13 @@ function renderFestivalGrid() {
 
     let statusHtml;
     if (cracked) statusHtml = `<span class="festival-status cracked">✓ Cracked today</span>`;
-    else if (active && !official) statusHtml = `<span class="festival-status available">Ready early</span>`;
-    else if (active) statusHtml = `<span class="festival-status available">Ready to crack</span>`;
+    else if (active && official) statusHtml = `<span class="festival-status available">Ready to crack</span>`;
+    else if (active && today() > officialEndDate(f)) {
+      const d = Math.ceil((new Date(officialEndDate(f)).setDate(officialEndDate(f).getDate() + (f.lateDays || 0)) - today()) / 864e5);
+      const label = d === 1 ? '1 day' : `${d} days`;
+      statusHtml = `<span class="festival-status available">Last chance · ${label} left</span>`;
+    }
+    else if (active) statusHtml = `<span class="festival-status available">Ready early</span>`;
     else {
       const d = daysUntilOfficialStart(f);
       const label = d === 1 ? 'tomorrow' : `${d} days`;

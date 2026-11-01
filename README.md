@@ -8,7 +8,7 @@ A single-page web app where you "crack" a themed fortune cookie for different fe
 
 ## What it does
 
-- **Festival picker** — Choose from seven festivals: Halloween, Christmas, Diwali, Eid, Lunar New Year, Valentine's Day, and Birthday. Each card shows the full date window with year (e.g. "Oct 25 – 31, 2026"), a region tag (e.g. "South Asia"), and has its own SVG vessel (cookie shape), color palette, and rarity labels. Festivals open early with a grace period (7 days for most, 14 days for Christmas and Lunar New Year), so you can start cracking before the official window begins.
+- **Festival picker** — Choose from seven festivals: Halloween, Christmas, Diwali, Eid, Lunar New Year, Valentine's Day, and Birthday. Each card shows the full date window with year (e.g. "Oct 25 – 31, 2026"), a region tag (e.g. "South Asia"), and has its own SVG vessel (cookie shape), color palette, and rarity labels. Festivals open early with a grace period (7 days for most, 14 days for Christmas and Lunar New Year), so you can start cracking before the official window begins — and stay open for the same grace period after it ends, with a "Last chance · N days left" badge during that after-window.
 - **Hold-to-crack** — Press and hold the vessel for 2 seconds to trigger a shake animation and particle burst, then reveal the fortune.
 - **One per day** — Each festival can only be cracked once per calendar day. If you've already cracked it today, the same fortune is shown again. No rerolls, no catch-up.
 - **Rarity system** — Fortunes are weighted by tier: Common 60%, Uncommon 25%, Rare 12%, Legendary 3%. Each festival has its own tier names (e.g., Whisper/Omen/Curse/Haunting for Halloween).
@@ -113,7 +113,7 @@ This validates all festival JSON files (required fields, rarity weights, unique 
 
 ## Changelog
 
-- **v1.2** (Nov 2026) — Full date windows with year on festival cards ("Oct 25 – 31, 2026"), region tags, early-access grace period (7–14 days before official start), "Ready early" and "Opens in N days" badges, Clear Journal button in the Journal view, year-only birth-year input clarified.
+- **v1.2** (Nov 2026) — Full date windows with year on festival cards ("Oct 25 – 31, 2026"), region tags, early-access grace period (7–14 days before official start) and late grace window (same 7–14 days after official end) with "Last chance" badge, "Ready early" and "Opens in N days" badges, Clear Journal button in the Journal view, year-only birth-year input clarified.
 - **v1.1.1** (Nov 2026) — Social media preview cards: pre-rendered OG images for all 247 fortunes, `og-image`/`twitter:image` meta tags fixed to absolute URLs, Vercel serverless function (`/api/fortune`) serves crawler-friendly OG tags using the production domain.
 - **v1.1** (Nov 2026) — Eid festival (7th), dark/light mode toggle, social share menu (native, Twitter/X, Facebook, WhatsApp, Telegram, LinkedIn, copy link, PNG download), Node test suite (`npm test`).
 - **v1.0** (Oct 2026) — Initial release: six festivals, hold-to-crack with particle burst, weighted rarity system, one-per-day lock, localStorage journal, share cards, GitHub Pages + Vercel deployments.
