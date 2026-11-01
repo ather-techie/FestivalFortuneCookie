@@ -87,6 +87,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 
 /* ===== Buttons ===== */
 .reveal-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.save-status{display:inline-block;padding:.6rem 1rem;border-radius:10px;background:rgba(255,255,255,.03);color:var(--muted);font-family:var(--font-ui);font-size:.9rem}
+.back-btn{position:absolute;top:-12px;left:20px;background:var(--surface);border:1px solid rgba(255,255,255,.06);padding:.25rem .6rem;border-radius:6px;font-size:.85rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.back-btn:hover{background:rgba(255,255,255,.04)}
+.btn-ghost.hidden{display:none!important}
 .btn-primary,.btn-secondary,.btn-ghost,.btn-danger{font-family:var(--font-ui);font-size:.85rem;padding:.65rem 1.5rem;border-radius:10px;border:none;cursor:pointer;transition:all .2s;font-weight:500}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-primary:hover{background:#e55a28}

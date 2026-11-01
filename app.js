@@ -210,10 +210,13 @@ document.getElementById('back-from-reveal').addEventListener('click', () => {
   document.querySelector('.hero').classList.remove('hidden');
 });
 
-document.getElementById('btn-again').addEventListener('click', () => {
-  document.getElementById('reveal-stage').classList.add('hidden');
-  if (state.currentFestival) openCrackStage(state.currentFestival);
-});
+const btnAgain = document.getElementById('btn-again');
+if (btnAgain) {
+  btnAgain.addEventListener('click', () => {
+    document.getElementById('reveal-stage').classList.add('hidden');
+    if (state.currentFestival) openCrackStage(state.currentFestival);
+  });
+}
 
 // --- Hold-to-crack ---
 const vessel = document.getElementById('vessel');
@@ -302,8 +305,18 @@ function showReveal(fortune) {
 
   // Store for share
   state.currentFortune = fortune;
-  document.getElementById('btn-save').textContent = 'Saved ✓';
-  setTimeout(() => document.getElementById('btn-save').textContent = 'Save to Journal', 1500);
+  // Show saved state label; hide interactive save button if present
+  const saveBtn = document.getElementById('btn-save');
+  const saveStatus = document.getElementById('save-status');
+  if (saveBtn) saveBtn.style.display = 'none';
+  if (saveStatus) saveStatus.classList.remove('hidden');
+
+  // Hide "Crack Another" when user already cracked today
+  const againBtn = document.getElementById('btn-again');
+  if (againBtn) {
+    if (hasCrackedToday(key)) againBtn.classList.add('hidden');
+    else againBtn.classList.remove('hidden');
+  }
 }
 
 // --- Particle canvas ---
