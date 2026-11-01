@@ -2,13 +2,13 @@
 
 // --- Festival registry: loaded from festivals/<key>/ ---
 const FESTIVALS = [
-  { key: 'halloween',      name: 'Halloween',       emoji: '🎃', startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, region: 'Worldwide' },
-  { key: 'christmas',      name: 'Christmas',       emoji: '🎄', startMonth: 12, startDay: 20, endMonth: 12, endDay: 25, region: 'Worldwide' },
-  { key: 'diwali',         name: 'Diwali',          emoji: '🪔', startMonth: 10, startDay: 20, endMonth: 11, endDay: 5,  region: 'South Asia' },
-  { key: 'eid',            name: 'Eid',             emoji: '🌙', startMonth: 4,  startDay: 1,  endMonth: 5,  endDay: 5,  region: 'Muslim-majority regions' },
-  { key: 'lunar-new-year', name: 'Lunar New Year',  emoji: '🐉', startMonth: 1,  startDay: 20, endMonth: 2,  endDay: 10, region: 'East Asia' },
-  { key: 'valentine',      name: "Valentine's Day", emoji: '💕', startMonth: 2,  startDay: 10, endMonth: 2,  endDay: 15, region: 'Worldwide' },
-  { key: 'birthday',       name: 'Birthday',        emoji: '🎂', startMonth: 1,  startDay: 1,  endMonth: 12, endDay: 31, region: 'Everywhere' },
+  { key: 'halloween',      name: 'Halloween',       emoji: '🎃', startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, region: 'Worldwide',       earlyDays: 7 },
+  { key: 'christmas',      name: 'Christmas',       emoji: '🎄', startMonth: 12, startDay: 20, endMonth: 12, endDay: 25, region: 'Worldwide',       earlyDays: 14 },
+  { key: 'diwali',         name: 'Diwali',          emoji: '🪔', startMonth: 10, startDay: 20, endMonth: 11, endDay: 5,  region: 'South Asia',      earlyDays: 7 },
+  { key: 'eid',            name: 'Eid',             emoji: '🌙', startMonth: 4,  startDay: 1,  endMonth: 5,  endDay: 5,  region: 'Muslim-majority regions', earlyDays: 7 },
+  { key: 'lunar-new-year', name: 'Lunar New Year',  emoji: '🐉', startMonth: 1,  startDay: 20, endMonth: 2,  endDay: 10, region: 'East Asia',       earlyDays: 14 },
+  { key: 'valentine',      name: "Valentine's Day", emoji: '💕', startMonth: 2,  startDay: 10, endMonth: 2,  endDay: 15, region: 'Worldwide',       earlyDays: 7 },
+  { key: 'birthday',       name: 'Birthday',        emoji: '🎂', startMonth: 1,  startDay: 1,  endMonth: 12, endDay: 31, region: 'Everywhere',      earlyDays: 0 },
 ];
 
 const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -50,12 +50,39 @@ function showToast(msg) {
 }
 
 // --- Festival window logic ---
+function festivalDate(f, month, day) {
+  return new Date(today().getFullYear(), month - 1, day);
+}
+
+// Festival is open from (start − earlyDays) through end.
+// Uses Date arithmetic so month/year rollover is handled correctly.
 function isFestivalActive(f) {
-  const now = today(), m = now.getMonth()+1, d = now.getDate();
-  if (f.startMonth === f.endMonth) return m === f.startMonth && d >= f.startDay && d <= f.endDay;
-  if (m === f.startMonth) return d >= f.startDay;
-  if (m === f.endMonth) return d <= f.endDay;
-  return false;
+  const now = today();
+  const start = festivalDate(f, f.startMonth, f.startDay);
+  const end = festivalDate(f, f.endMonth, f.endDay);
+  if (end < start) end.setFullYear(end.getFullYear() + 1); // festival wraps the year end
+
+  const openDate = new Date(start);
+  openDate.setDate(openDate.getDate() - (f.earlyDays || 0));
+
+  return now >= openDate && now <= end;
+}
+
+// Is the festival inside its official window (not just the grace period)?
+function isFestivalOfficial(f) {
+  const now = today();
+  const start = festivalDate(f, f.startMonth, f.startDay);
+  const end = festivalDate(f, f.endMonth, f.endDay);
+  if (end < start) end.setFullYear(end.getFullYear() + 1);
+  return now >= start && now <= end;
+}
+
+// Days until the festival officially starts (0 if already started)
+function daysUntilOfficialStart(f) {
+  const now = today();
+  const start = festivalDate(f, f.startMonth, f.startDay);
+  const diff = start - now;
+  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
 }
 
 function hasCrackedToday(key) {
@@ -149,6 +176,7 @@ function renderFestivalGrid() {
   grid.innerHTML = '';
   FESTIVALS.forEach(f => {
     const active = isFestivalActive(f);
+    const official = isFestivalOfficial(f);
     const cracked = hasCrackedToday(f.key);
     const card = document.createElement('div');
     card.className = `festival-card${f.key === 'birthday' ? ' today' : ''}${!active && f.key !== 'birthday' ? ' upcoming' : ''}`;
@@ -156,8 +184,13 @@ function renderFestivalGrid() {
 
     let statusHtml;
     if (cracked) statusHtml = `<span class="festival-status cracked">✓ Cracked today</span>`;
+    else if (active && !official) statusHtml = `<span class="festival-status available">Ready early</span>`;
     else if (active) statusHtml = `<span class="festival-status available">Ready to crack</span>`;
-    else statusHtml = `<span class="festival-status upcoming">Upcoming</span>`;
+    else {
+      const d = daysUntilOfficialStart(f);
+      const label = d === 1 ? 'tomorrow' : `${d} days`;
+      statusHtml = `<span class="festival-status upcoming">Opens ${dateLabel(f).split(' – ')[0]} · in ${label}</span>`;
+    }
 
     card.innerHTML = `
       <div class="festival-emoji">${f.emoji}</div>
