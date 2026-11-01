@@ -33,8 +33,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 [data-theme='light'] .toast{background:var(--surface2);color:var(--text)}
 
 /* ===== Views ===== */
-.view{display:none;padding:2rem 1.5rem;max-width:800px;margin:0 auto}
+.view{display:none;padding:2rem 1.5rem;max-width:820px;margin:0 auto}
 .view.active{display:block}
+.about-section{background:var(--surface);padding:2rem;border-radius:12px;border:1px solid rgba(255,255,255,.04)}
+.about-tagline{font-size:1.05rem;color:var(--muted);margin-bottom:0.5rem}
+.about-desc{margin-bottom:0.8rem}
+.about-meta{display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;margin-bottom:0.8rem}
+.about-version{font-family:var(--font-ui);font-weight:700;color:var(--accent2);margin-right:0.5rem}
+.about-chip{background:rgba(255,255,255,.04);padding:.25rem .5rem;border-radius:8px;font-size:.8rem;color:var(--muted)}
+.about-divider{height:1px;background:rgba(255,255,255,.04);margin:1rem 0}
+.about-links{margin-top:0.8rem;display:flex;gap:0.6rem}
+.about-link{background:var(--accent);color:white;padding:.5rem .8rem;border-radius:8px;text-decoration:none;font-family:var(--font-ui)}
 
 /* ===== Hero ===== */
 .hero{text-align:center;margin-bottom:2.5rem}
