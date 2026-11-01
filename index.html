@@ -101,7 +101,10 @@
 
     <main id="view-journal" class="view">
       <section class="journal-header">
-        <h2>Your Fortune Journal</h2>
+        <div class="journal-header-row">
+          <h2>Your Fortune Journal</h2>
+          <button class="btn-danger btn-small" id="btn-clear-journal-view">Clear Journal</button>
+        </div>
         <p class="journal-count" id="journal-count">0 fortunes collected</p>
         <div class="journal-filters" id="journal-filters">
           <button class="filter-btn active" data-filter="all">All</button>
@@ -114,9 +117,9 @@
       <section class="settings-section">
         <h2>Settings</h2>
         <div class="setting-item">
-          <label for="birth-year">Birth Year</label>
+          <label for="birth-year">Birth Year (year only)</label>
           <input type="number" id="birth-year" min="1900" max="2026" placeholder="1990">
-          <p class="setting-hint">Used for age-aware birthday fortunes</p>
+          <p class="setting-hint">Birthday fortunes are filtered by age, which only needs the year — a full date of birth is not required.</p>
         </div>
         <div class="setting-item">
           <button class="btn-danger" id="btn-clear-journal">Clear Journal</button>

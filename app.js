@@ -411,12 +411,19 @@ document.getElementById('birth-year').addEventListener('change', e => {
   showToast('Birth year saved');
 });
 
-document.getElementById('btn-clear-journal').addEventListener('click', () => {
+function clearJournal() {
   if (!confirm('Clear all fortunes from your journal?')) return;
   state.journal = []; state.streaks = {};
   saveState();
   showToast('Journal cleared');
-});
+  renderFestivalGrid();
+  const list = document.getElementById('journal-list');
+  if (list) renderJournalList('all');
+}
+
+document.getElementById('btn-clear-journal').addEventListener('click', clearJournal);
+const btnClearJournalView = document.getElementById('btn-clear-journal-view');
+if (btnClearJournalView) btnClearJournalView.addEventListener('click', clearJournal);
 
 // --- Share button ---
 document.getElementById('btn-share').addEventListener('click', () => {

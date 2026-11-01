@@ -95,10 +95,10 @@ This validates all festival JSON files and checks that the app structure include
 4. Check the card shows: festival badge, rarity badge with correct label, fortune text, and date.
 5. Click **Share** — a share menu opens with options for native share, Twitter/X, Facebook, WhatsApp, Telegram, LinkedIn, copy link, and download PNG.
 6. Toggle the **🌙/☀️** theme button — the page switches between dark and light mode.
-7. Click **Journal** — the fortune appears in the journal list with correct festival and rarity.
+7. Click **Journal** — the fortune appears in the journal list with correct festival and rarity. Click **Clear Journal** at the top right — the list empties and shows "No fortunes yet."
 8. Return to the same festival and try to crack again — the same fortune is shown (no reroll).
-9. Open Settings, set a birth year, then crack a Birthday cookie — the fortune matches the age band (e.g., birth year 1990 → age ~36 → 30–39 band).
-10. Click **Clear Journal** — journal empties and reloads to "No fortunes yet."
+9. Open Settings, set a birth year (year only — no full date needed; age is derived from it), then crack a Birthday cookie — the fortune matches the age band (e.g., birth year 1990 → age ~36 → 30–39 band).
+10. Click **Clear Journal** in Settings — same result: journal empties and reloads to "No fortunes yet."
 
 ## Add a new festival
 

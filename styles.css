@@ -98,7 +98,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 
 /* ===== Journal ===== */
 .journal-header{margin-bottom:2rem}
+.journal-header-row{display:flex;justify-content:space-between;align-items:center;gap:1rem}
 .journal-header h2{margin-bottom:.25rem}
+.btn-small{padding:.45rem .9rem;font-size:.78rem}
 .journal-count{color:var(--muted);font-size:.85rem;margin-bottom:1rem}
 .journal-filters{display:flex;gap:.4rem;flex-wrap:wrap}
 .filter-btn{background:none;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:var(--font-ui);font-size:.75rem;padding:.3rem .7rem;border-radius:6px;cursor:pointer}

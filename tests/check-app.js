@@ -45,6 +45,12 @@ function checkApp() {
   assert(share.includes('getAppUrl'), 'share.js: getAppUrl function missing');
   assert(share.includes('/api/fortune'), 'share.js: API fortune route missing');
 
+  // Clear journal button in Journal view + shared handler
+  assert(html.includes('btn-clear-journal-view'), 'index.html: journal view clear button missing');
+  assert(html.includes('btn-clear-journal"'), 'index.html: settings clear button missing');
+  assert(app.includes('function clearJournal'), 'app.js: clearJournal function missing');
+  assert(css.includes('.journal-header-row'), 'styles.css: journal header row styles missing');
+
   // OG images directory
   const ogDir = path.join(__dirname, '..', 'og-images');
   assert(fs.existsSync(ogDir), 'og-images directory missing');
