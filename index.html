@@ -14,6 +14,7 @@
         <button class="nav-tab active" data-view="home">Home</button>
         <button class="nav-tab" data-view="journal">Journal</button>
         <button class="nav-tab" data-view="settings">Settings</button>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light">🌙</button>
       </nav>
     </header>
 
@@ -60,6 +61,25 @@
         </div>
         <canvas id="share-canvas" class="share-canvas hidden"></canvas>
       </section>
+
+      <!-- Share Menu Modal -->
+      <div id="share-menu" class="share-menu hidden">
+        <div class="share-menu-backdrop"></div>
+        <div class="share-menu-panel">
+          <h3>Share your fortune</h3>
+          <div class="share-options">
+            <button class="share-option" data-network="native">📤 Native Share</button>
+            <button class="share-option" data-network="twitter">𝕏 Twitter / X</button>
+            <button class="share-option" data-network="facebook">📘 Facebook</button>
+            <button class="share-option" data-network="whatsapp">💬 WhatsApp</button>
+            <button class="share-option" data-network="telegram">✈️ Telegram</button>
+            <button class="share-option" data-network="linkedin">💼 LinkedIn</button>
+            <button class="share-option" data-network="copy">📋 Copy Link</button>
+            <button class="share-option" data-network="download">⬇️ Download PNG</button>
+          </div>
+          <button class="btn-ghost share-close" id="share-close">Close</button>
+        </div>
+      </div>
     </main>
 
     <main id="view-journal" class="view">

@@ -5,6 +5,7 @@ const FESTIVALS = [
   { key: 'halloween',      name: 'Halloween',       emoji: '🎃', startMonth: 10, startDay: 25, endMonth: 10, endDay: 31 },
   { key: 'christmas',      name: 'Christmas',       emoji: '🎄', startMonth: 12, startDay: 20, endMonth: 12, endDay: 25 },
   { key: 'diwali',         name: 'Diwali',          emoji: '🪔', startMonth: 10, startDay: 20, endMonth: 11, endDay: 5  },
+  { key: 'eid',            name: 'Eid',             emoji: '🌙', startMonth: 4,  startDay: 1,  endMonth: 5,  endDay: 5  },
   { key: 'lunar-new-year', name: 'Lunar New Year',  emoji: '🐉', startMonth: 1,  startDay: 20, endMonth: 2,  endDay: 10 },
   { key: 'valentine',      name: "Valentine's Day", emoji: '💕', startMonth: 2,  startDay: 10, endMonth: 2,  endDay: 15 },
   { key: 'birthday',       name: 'Birthday',        emoji: '🎂', startMonth: 1,  startDay: 1,  endMonth: 12, endDay: 31 },
@@ -109,6 +110,24 @@ function showView(viewId) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById(`view-${viewId}`).classList.add('active');
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.view === viewId));
+}
+
+// --- Theme toggle ---
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme || 'dark');
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem('ff_theme', next); } catch {}
+}
+
+function initTheme() {
+  let theme = 'dark';
+  try { theme = localStorage.getItem('ff_theme') || 'dark'; } catch {}
+  applyTheme(theme);
 }
 
 // --- Render festival grid ---
@@ -406,6 +425,10 @@ document.getElementById('btn-share').addEventListener('click', () => {
 
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  const themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
   renderFestivalGrid();
 
   // Check URL hash for shared fortune
