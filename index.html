@@ -31,6 +31,7 @@
         <button class="nav-tab active" data-view="home">Home</button>
         <button class="nav-tab" data-view="journal">Journal</button>
         <button class="nav-tab" data-view="settings">Settings</button>
+        <button class="nav-tab" data-view="about">About</button>
         <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light">🌙</button>
       </nav>
     </header>
@@ -125,13 +126,20 @@
           <button class="btn-danger" id="btn-clear-journal">Clear Journal</button>
           <p class="setting-hint warning">This cannot be undone</p>
         </div>
-        <div class="setting-item">
-          <label>About</label>
-          <p class="setting-hint">Festival Fortune v1.0 &mdash; One cookie per day. One truth per cookie.</p>
-        </div>
       </section>
     </main>
   </div>
+
+  <main id="view-about" class="view">
+    <section class="about-section">
+      <h2>About Festival Fortune</h2>
+      <p class="setting-hint">Festival Fortune — a tiny web toy that turns festival rituals into a moment: crack, read, and share a fortune. Built with care for shareability and ritual.</p>
+      <p class="setting-hint">Version: 1.2.0</p>
+      <h3>Built with Mel</h3>
+      <p class="setting-hint">This project was created with assistance from Mel — a terminal-based coding assistant that inspects files, proposes a plan, writes code, runs tests, commits changes, and safely deploys.</p>
+      <p class="setting-hint">The project was built, tested, and deployed with Mel handling the repository edits, release creation, and Vercel deployment steps under user approval.</p>
+    </section>
+  </main>
 
   <div id="toast" class="toast hidden"></div>
 

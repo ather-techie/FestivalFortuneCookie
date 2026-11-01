@@ -27,6 +27,9 @@ function checkApp() {
 
   // Share menu
   assert(html.includes('share-menu'), 'index.html: share menu is missing');
+  // About view
+  assert(html.includes('view-about'), 'index.html: about view is missing');
+  assert(html.includes('data-view="about"'), 'index.html: about nav tab is missing');
   assert(share.includes('openShareMenu'), 'share.js: openShareMenu is missing');
   assert(share.includes('closeShareMenu'), 'share.js: closeShareMenu is missing');
   assert(share.includes('shareToNetwork'), 'share.js: shareToNetwork is missing');
