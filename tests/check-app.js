@@ -37,6 +37,25 @@ function checkApp() {
   assert(html.includes('data-network="copy"'), 'index.html: Copy Link option missing');
   assert(css.includes('.share-menu'), 'styles.css: share menu styles are missing');
 
+  // OG meta tags
+  assert(html.includes('og:title'), 'index.html: OG title meta tag missing');
+  assert(html.includes('og:image'), 'index.html: OG image meta tag missing');
+  assert(html.includes('twitter:card'), 'index.html: Twitter card meta tag missing');
+  assert(app.includes('updateOgTags'), 'app.js: updateOgTags function missing');
+  assert(share.includes('getAppUrl'), 'share.js: getAppUrl function missing');
+  assert(share.includes('/api/fortune'), 'share.js: API fortune route missing');
+
+  // OG images directory
+  const ogDir = path.join(__dirname, '..', 'og-images');
+  assert(fs.existsSync(ogDir), 'og-images directory missing');
+  const ogFiles = fs.readdirSync(ogDir).filter(f => f.endsWith('.png'));
+  assert(ogFiles.includes('default.png'), 'og-images/default.png missing');
+  assert(ogFiles.length >= 247, `Expected 247+ OG images, found ${ogFiles.length}`);
+
+  // API serverless function
+  const apiPath = path.join(__dirname, '..', 'api', 'fortune.js');
+  assert(fs.existsSync(apiPath), 'api/fortune.js serverless function missing');
+
   console.log('✓ App structure checks passed');
 }
 

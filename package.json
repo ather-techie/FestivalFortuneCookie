@@ -3,8 +3,18 @@
   "version": "1.1.0",
   "description": "A single-page web app where you crack themed fortune cookies for festivals and birthdays.",
   "scripts": {
-    "test": "node tests/run.js"
+    "test": "node tests/run.js",
+    "generate-og": "node scripts/generate-og-images.js"
   },
-  "keywords": ["fortune", "cookie", "festival", "web", "static"],
-  "license": "MIT"
+  "keywords": [
+    "fortune",
+    "cookie",
+    "festival",
+    "web",
+    "static"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "canvas": "^3.2.3"
+  }
 }

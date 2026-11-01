@@ -423,6 +423,27 @@ document.getElementById('btn-share').addEventListener('click', () => {
   if (typeof renderShareCard === 'function') renderShareCard();
 });
 
+// --- OG meta tag updater ---
+function updateOgTags(fortune, festivalName) {
+  const baseUrl = 'https://festivalfortunecookie.vercel.app';
+  const ogImage = `${baseUrl}/og-images/${fortune.id}.png`;
+  const ogTitle = `My ${festivalName} Fortune`;
+  const ogDesc = fortune.text.length > 200 ? fortune.text.slice(0,197) + '…' : fortune.text;
+
+  const setMeta = (prop, content) => {
+    let el = document.querySelector(`meta[property="${prop}"]`) || document.querySelector(`meta[name="${prop}"]`);
+    if (el) el.setAttribute('content', content);
+  };
+  setMeta('og:title', ogTitle);
+  setMeta('og:description', ogDesc);
+  setMeta('og:image', ogImage);
+  setMeta('og:url', `${baseUrl}/api/fortune?key=${encodeURIComponent(state.currentFestival)}&id=${encodeURIComponent(fortune.id)}`);
+  setMeta('twitter:title', ogTitle);
+  setMeta('twitter:description', ogDesc);
+  setMeta('twitter:image', ogImage);
+  document.title = `${ogTitle} — Festival Fortune`;
+}
+
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -439,7 +460,11 @@ document.addEventListener('DOMContentLoaded', () => {
       loadFestivalData(payload.key).then(data => {
         state._currentData = data;
         const fortune = data.fortunes.find(f => f.id === payload.id);
-        if (fortune) showReveal(fortune);
+        if (fortune) {
+          showReveal(fortune);
+          const fMeta = FESTIVALS.find(f => f.key === payload.key);
+          updateOgTags(fortune, fMeta ? fMeta.name : 'Festival');
+        }
       });
     } catch {}
   }

@@ -14,6 +14,7 @@ A single-page web app where you "crack" a themed fortune cookie for different fe
 - **Journal** — Every cracked fortune is saved to localStorage with date, festival, fortune ID, and rarity. Filter the journal by festival.
 - **Dark / light mode** — Toggle the theme from the header; your preference is saved in localStorage.
 - **Share menu** — Click **Share** to open a menu with options for native sharing, Twitter/X, Facebook, WhatsApp, Telegram, LinkedIn, copy link, or download the PNG card.
+- **Social media cards** — Shared links include Open Graph and Twitter Card meta tags. Each fortune has a pre-rendered 600×800 PNG image that appears as a preview card on social platforms. A Vercel serverless function serves the correct OG tags to crawlers that can't read URL hash fragments.
 
 ## Tech stack
 
@@ -21,15 +22,20 @@ A single-page web app where you "crack" a themed fortune cookie for different fe
 - `fetch()` loads JSON fortune files from `festivals/<name>/fortunes.json`.
 - `localStorage` persists journal, streaks, and birth year.
 - Canvas 2D for particle burst animation and share card rendering.
+- Pre-rendered OG images in `og-images/` for social media previews.
+- Vercel serverless function (`api/fortune.js`) for crawler-friendly OG meta tags.
 
 ## Project structure
 
 ```
 .
-├── index.html          # App shell
+├── index.html          # App shell + OG meta tags
 ├── styles.css          # Base styles + per-festival palette overrides
-├── app.js              # Engine: crack logic, rarity roll, journal, streaks
-├── share.js            # Canvas share card renderer + URL encoder
+├── app.js              # Engine: crack logic, rarity roll, journal, streaks, OG updater
+├── share.js            # Canvas share card renderer + social share menu
+├── api/fortune.js      # Vercel serverless function for crawler OG tags
+├── scripts/generate-og-images.js  # Pre-renders all OG images
+├── og-images/          # 247 fortune PNGs + default.png
 └── festivals/
     ├── halloween/fortunes.json      # 50 fortunes
     ├── christmas/fortunes.json      # 35 fortunes
@@ -87,7 +93,8 @@ This validates all festival JSON files and checks that the app structure include
    - `rarityLabels` (labels per tier)
    - `fortunes` array with `id`, `rarity`, and `text` (plus optional `ageBand` for birthday)
 2. Add an entry to the `FESTIVALS` array at the top of `app.js` with `key`, `name`, `emoji`, and date window (`startMonth`, `startDay`, `endMonth`, `endDay`).
-3. No code changes needed elsewhere.
+3. Regenerate OG images: `npm run generate-og`
+4. No code changes needed elsewhere.
 
 ## Known limitations
 
@@ -97,7 +104,7 @@ This validates all festival JSON files and checks that the app structure include
 
 ## Built with Mel
 
-This project was designed and built entirely with [Mel](https://mel.app), an AID coding agent that works directly inside a terminal environment. It can inspect your project files, generate and modify code, write creative copy, and run commands — while keeping you in control.
+This project was designed and built entirely with [Mel](https://mel.app), an AI coding agent that works directly inside a terminal environment. It can inspect your project files, generate and modify code, write creative copy, and run commands — while keeping you in control.
 
 ## Why I built this with Mel
 

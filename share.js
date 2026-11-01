@@ -12,6 +12,14 @@ function getShareUrl() {
   const fortune = state.currentFortune;
   const key = state.currentFestival;
   if (!fortune || !key) return null;
+  // Use the serverless API route so social crawlers get proper OG meta tags
+  return `${location.origin}/api/fortune?key=${encodeURIComponent(key)}&id=${encodeURIComponent(fortune.id)}`;
+}
+
+function getAppUrl() {
+  const fortune = state.currentFortune;
+  const key = state.currentFestival;
+  if (!fortune || !key) return null;
   const payload = btoa(JSON.stringify({ key, id: fortune.id }));
   return `${location.origin}${location.pathname}#f=${payload}`;
 }
@@ -24,7 +32,7 @@ function getShareText() {
 
 async function shareNative(pngBlob) {
   const text = getShareText();
-  const url = getShareUrl();
+  const url = getAppUrl() || getShareUrl(); // Use hash URL for native share (in-browser)
   const files = pngBlob ? [new File([pngBlob], 'festival-fortune.png', { type: 'image/png' })] : [];
   if (navigator.share && (navigator.canShare && navigator.canShare({ files }))) {
     try {
