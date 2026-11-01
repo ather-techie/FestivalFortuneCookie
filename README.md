@@ -81,3 +81,7 @@ No automated test suite exists. Manual verification checklist:
 - All state is client-side in `localStorage`. Clearing browser data wipes the journal.
 - The `fetch()` for fortune JSONs requires a local server or hosting with proper CORS.
 - No sound, no AR, no pair cracking, no email/push notifications, no backend — all of these are potential v2 features.
+
+## Built with Mel
+
+This project was designed and built entirely with [Mel](https://mel.app), an AI coding agent. Mel handled every step: writing the plan, generating the HTML, CSS, JavaScript engine, share card renderer, and all 211 fortune copy across six festivals — plus the GitHub repo, README, GitHub Pages deployment, and Vercel release.
