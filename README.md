@@ -12,8 +12,8 @@ A single-page web app where you "crack" a themed fortune cookie for different fe
 - **Hold-to-crack** — Press and hold the vessel for 2 seconds to trigger a shake animation and particle burst, then reveal the fortune.
 - **One per day** — Each festival can only be cracked once per calendar day. If you've already cracked it today, the same fortune is shown again. No rerolls, no catch-up.
 - **Rarity system** — Fortunes are weighted by tier: Common 60%, Uncommon 25%, Rare 12%, Legendary 3%. Each festival has its own tier names (e.g., Whisper/Omen/Curse/Haunting for Halloween).
-- **Age-aware birthday** — Set your birth year in Settings; birthday fortunes filter by age band (e.g., 20–29, 30–39, etc.).
-- **Journal** — Every cracked fortune is saved to localStorage with date, festival, fortune ID, and rarity. Filter the journal by festival.
+- **Age-aware birthday** — Set your birth year in Settings (year only — no full date needed); birthday fortunes filter by age band (e.g., 20–29, 30–39, etc.).
+- **Journal** — Every cracked fortune is saved to localStorage with date, festival, fortune ID, and rarity. Filter the journal by festival, or clear it entirely with the **Clear Journal** button in the Journal header (also available in Settings).
 - **Dark / light mode** — Toggle the theme from the header; your preference is saved in localStorage.
 - **Share menu** — Click **Share** to open a menu with options for native sharing, Twitter/X, Facebook, WhatsApp, Telegram, LinkedIn, copy link, or download the PNG card.
 - **Social media cards** — Shared links include Open Graph and Twitter Card meta tags. Each fortune has a pre-rendered 600×800 PNG image that appears as a preview card on social platforms. A Vercel serverless function serves the correct OG tags to crawlers that can't read URL hash fragments.
@@ -85,7 +85,7 @@ Run the Node.js test suite:
 npm test
 ```
 
-This validates all festival JSON files and checks that the app structure includes EID, theme toggle, and share menu support.
+This validates all festival JSON files (required fields, rarity weights, unique IDs) and checks that the app structure includes EID, theme toggle, share menu, journal clear button, OG meta tags, and the serverless OG function.
 
 ### Manual verification checklist
 
