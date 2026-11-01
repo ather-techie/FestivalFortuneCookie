@@ -97,4 +97,17 @@ This validates all festival JSON files and checks that the app structure include
 
 ## Built with Mel
 
-This project was designed and built entirely with [Mel](https://mel.app), an AI coding agent. Mel handled every step: writing the plan, generating the HTML, CSS, JavaScript engine, share card renderer, and all 211 fortune copy across six festivals — plus the GitHub repo, README, GitHub Pages deployment, and Vercel release.
+This project was designed and built entirely with [Mel](https://mel.app), an AID coding agent that works directly inside a terminal environment. It can inspect your project files, generate and modify code, write creative copy, and run commands — while keeping you in control.
+
+## Why I built this with Mel
+
+I built this with Mel to show how an AI agent can take a creative idea from concept to deployed product in one session:
+
+1. **Research first** — Mel searched GitHub for existing fortune-cookie generators to confirm the festival-specific niche was open before writing any code.
+2. **Plan before building** — Mel proposed a numbered plan covering architecture, data model, tone system, and features — and waited for approval before starting.
+3. **Creative writing at scale** — Mel wrote 247 fortunes across seven festivals, each in a distinct voice, with rarity-scaled emotional depth. This is the kind of copy work that would take a human hours and Mel did in minutes.
+4. **Engine + UI + data in one pass** — The JavaScript engine, CSS animations, HTML structure, and all six festival JSON data files were built together so they actually fit.
+5. **Ship and verify** — Mel created the GitHub repo, GitHub Pages deployment, and Vercel deployment, then confirmed the live URL returned HTTP 200.
+6. **Iterate safely** — When I asked for new features (EID festival, dark/light mode, social sharing), Mel added tests first, then the code, then ran `npm test` to confirm everything passed before committing.
+
+The result is a complete, deployed, tested web app — not a prototype or a tutorial fork.
