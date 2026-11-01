@@ -15,12 +15,13 @@ const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'
 
 // Readable date window: "Oct 25 – 31" (same month), "Oct 25 – Nov 5" (crossing), or all-year for birthday.
 function dateLabel(f) {
-  if (f.key === 'birthday') return 'Any day — it\'s yours';
+  const year = today().getFullYear();
+  if (f.key === 'birthday') return `Any day, ${year} — it's yours`;
   const start = `${MONTH_SHORT[f.startMonth - 1]} ${f.startDay}`;
   const end = f.startMonth === f.endMonth
     ? `${f.endDay}`
     : `${MONTH_SHORT[f.endMonth - 1]} ${f.endDay}`;
-  return `${start} – ${end}`;
+  return `${start} – ${end}, ${year}`;
 }
 
 // --- State ---

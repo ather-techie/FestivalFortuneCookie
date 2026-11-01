@@ -51,9 +51,10 @@ function checkApp() {
   assert(app.includes('function clearJournal'), 'app.js: clearJournal function missing');
   assert(css.includes('.journal-header-row'), 'styles.css: journal header row styles missing');
 
-  // Full dates + region tag on festival cards
+  // Full dates + year + region tag on festival cards
   assert(app.includes('function dateLabel'), 'app.js: dateLabel function missing');
   assert(app.includes("MONTH_SHORT"), 'app.js: MONTH_SHORT constant missing');
+  assert(app.includes('}, ${year}'), 'app.js: dateLabel missing year suffix');
   assert(!app.includes('${f.startMonth}/${f.startDay}'), 'app.js: old numeric date format still present');
   assert(app.includes('festival-region'), 'app.js: region tag not rendered on cards');
   assert(app.includes("region: 'Worldwide'"), 'app.js: region field missing from festival registry');
