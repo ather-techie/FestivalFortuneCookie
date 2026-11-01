@@ -49,7 +49,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 .festival-card.today{border-color:var(--accent)}
 .festival-emoji{font-size:2.5rem;margin-bottom:.6rem}
 .festival-name{font-family:var(--font-ui);font-weight:600;font-size:1rem;margin-bottom:.25rem}
-.festival-date{font-size:.8rem;color:var(--muted);margin-bottom:.5rem}
+.festival-date{font-size:.8rem;color:var(--muted);margin-bottom:.25rem}
+.festival-region{font-family:var(--font-ui);font-size:.68rem;color:var(--muted);opacity:.75;margin-bottom:.5rem}
 .festival-status{font-family:var(--font-ui);font-size:.75rem;padding:.2rem .5rem;border-radius:6px;display:inline-block}
 .festival-status.available{background:rgba(255,107,53,.15);color:var(--accent)}
 .festival-status.cracked{background:rgba(100,200,100,.12);color:#64c864}

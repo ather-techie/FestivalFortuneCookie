@@ -2,14 +2,26 @@
 
 // --- Festival registry: loaded from festivals/<key>/ ---
 const FESTIVALS = [
-  { key: 'halloween',      name: 'Halloween',       emoji: '🎃', startMonth: 10, startDay: 25, endMonth: 10, endDay: 31 },
-  { key: 'christmas',      name: 'Christmas',       emoji: '🎄', startMonth: 12, startDay: 20, endMonth: 12, endDay: 25 },
-  { key: 'diwali',         name: 'Diwali',          emoji: '🪔', startMonth: 10, startDay: 20, endMonth: 11, endDay: 5  },
-  { key: 'eid',            name: 'Eid',             emoji: '🌙', startMonth: 4,  startDay: 1,  endMonth: 5,  endDay: 5  },
-  { key: 'lunar-new-year', name: 'Lunar New Year',  emoji: '🐉', startMonth: 1,  startDay: 20, endMonth: 2,  endDay: 10 },
-  { key: 'valentine',      name: "Valentine's Day", emoji: '💕', startMonth: 2,  startDay: 10, endMonth: 2,  endDay: 15 },
-  { key: 'birthday',       name: 'Birthday',        emoji: '🎂', startMonth: 1,  startDay: 1,  endMonth: 12, endDay: 31 },
+  { key: 'halloween',      name: 'Halloween',       emoji: '🎃', startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, region: 'Worldwide' },
+  { key: 'christmas',      name: 'Christmas',       emoji: '🎄', startMonth: 12, startDay: 20, endMonth: 12, endDay: 25, region: 'Worldwide' },
+  { key: 'diwali',         name: 'Diwali',          emoji: '🪔', startMonth: 10, startDay: 20, endMonth: 11, endDay: 5,  region: 'South Asia' },
+  { key: 'eid',            name: 'Eid',             emoji: '🌙', startMonth: 4,  startDay: 1,  endMonth: 5,  endDay: 5,  region: 'Muslim-majority regions' },
+  { key: 'lunar-new-year', name: 'Lunar New Year',  emoji: '🐉', startMonth: 1,  startDay: 20, endMonth: 2,  endDay: 10, region: 'East Asia' },
+  { key: 'valentine',      name: "Valentine's Day", emoji: '💕', startMonth: 2,  startDay: 10, endMonth: 2,  endDay: 15, region: 'Worldwide' },
+  { key: 'birthday',       name: 'Birthday',        emoji: '🎂', startMonth: 1,  startDay: 1,  endMonth: 12, endDay: 31, region: 'Everywhere' },
 ];
+
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// Readable date window: "Oct 25 – 31" (same month), "Oct 25 – Nov 5" (crossing), or all-year for birthday.
+function dateLabel(f) {
+  if (f.key === 'birthday') return 'Any day — it\'s yours';
+  const start = `${MONTH_SHORT[f.startMonth - 1]} ${f.startDay}`;
+  const end = f.startMonth === f.endMonth
+    ? `${f.endDay}`
+    : `${MONTH_SHORT[f.endMonth - 1]} ${f.endDay}`;
+  return `${start} – ${end}`;
+}
 
 // --- State ---
 let state = loadState();
@@ -149,7 +161,8 @@ function renderFestivalGrid() {
     card.innerHTML = `
       <div class="festival-emoji">${f.emoji}</div>
       <div class="festival-name">${f.name}</div>
-      <div class="festival-date">${f.startMonth}/${f.startDay} — ${f.endMonth}/${f.endDay}</div>
+      <div class="festival-date">${dateLabel(f)}</div>
+      <div class="festival-region">${f.region}</div>
       ${statusHtml}
     `;
     card.addEventListener('click', () => {

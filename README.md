@@ -8,7 +8,7 @@ A single-page web app where you "crack" a themed fortune cookie for different fe
 
 ## What it does
 
-- **Festival picker** — Choose from seven festivals: Halloween, Christmas, Diwali, Eid, Lunar New Year, Valentine's Day, and Birthday. Each has its own SVG vessel (cookie shape), color palette, and rarity labels.
+- **Festival picker** — Choose from seven festivals: Halloween, Christmas, Diwali, Eid, Lunar New Year, Valentine's Day, and Birthday. Each card shows the full date window (e.g. "Oct 25 – 31"), a region tag (e.g. "South Asia"), and has its own SVG vessel (cookie shape), color palette, and rarity labels.
 - **Hold-to-crack** — Press and hold the vessel for 2 seconds to trigger a shake animation and particle burst, then reveal the fortune.
 - **One per day** — Each festival can only be cracked once per calendar day. If you've already cracked it today, the same fortune is shown again. No rerolls, no catch-up.
 - **Rarity system** — Fortunes are weighted by tier: Common 60%, Uncommon 25%, Rare 12%, Legendary 3%. Each festival has its own tier names (e.g., Whisper/Omen/Curse/Haunting for Halloween).
@@ -85,11 +85,11 @@ Run the Node.js test suite:
 npm test
 ```
 
-This validates all festival JSON files (required fields, rarity weights, unique IDs) and checks that the app structure includes EID, theme toggle, share menu, journal clear button, OG meta tags, and the serverless OG function.
+This validates all festival JSON files (required fields, rarity weights, unique IDs) and checks that the app structure includes EID, theme toggle, share menu, journal clear button, OG meta tags, full-date labels, region tags, and the serverless OG function.
 
 ### Manual verification checklist
 
-1. Open the home page — festival cards render with emoji, date range, and status badge.
+1. Open the home page — festival cards render with emoji, full date window (e.g. "Oct 25 – 31"), region tag, and status badge.
 2. Click an active festival (Halloween, Eid, or Birthday are always available) — the crack stage appears with the correct vessel SVG and festival name.
 3. Press and hold the vessel — the hold bar fills, then the vessel shakes, particles burst, and the reveal stage appears with a fortune card.
 4. Check the card shows: festival badge, rarity badge with correct label, fortune text, and date.
@@ -107,7 +107,7 @@ This validates all festival JSON files (required fields, rarity weights, unique 
    - `rarityTiers` (common, uncommon, rare, legendary weights)
    - `rarityLabels` (labels per tier)
    - `fortunes` array with `id`, `rarity`, and `text` (plus optional `ageBand` for birthday)
-2. Add an entry to the `FESTIVALS` array at the top of `app.js` with `key`, `name`, `emoji`, and date window (`startMonth`, `startDay`, `endMonth`, `endDay`).
+2. Add an entry to the `FESTIVALS` array at the top of `app.js` with `key`, `name`, `emoji`, `region`, and date window (`startMonth`, `startDay`, `endMonth`, `endDay`). The date window renders as a readable label like "Oct 25 – 31"; `region` is a short cultural tag shown under the date.
 3. Regenerate OG images: `npm run generate-og`
 4. No code changes needed elsewhere.
 
