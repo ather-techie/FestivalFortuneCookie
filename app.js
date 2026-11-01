@@ -60,9 +60,10 @@ function festivalDate(f, month, day) {
 
 // Festival is open from (start − earlyDays) through end.
 // Uses Date arithmetic so month/year rollover is handled correctly.
+// If this year's window has fully passed, the next occurrence is next year.
 function isFestivalActive(f) {
   const now = today();
-  const start = festivalDate(f, f.startMonth, f.startDay);
+  const start = nextOccurrence(f);
   const end = festivalDate(f, f.endMonth, f.endDay);
   if (end < start) end.setFullYear(end.getFullYear() + 1); // festival wraps the year end
 
@@ -75,7 +76,7 @@ function isFestivalActive(f) {
 // Is the festival inside its official window (not just the grace period)?
 function isFestivalOfficial(f) {
   const now = today();
-  const start = festivalDate(f, f.startMonth, f.startDay);
+  const start = nextOccurrence(f);
   const end = festivalDate(f, f.endMonth, f.endDay);
   if (end < start) end.setFullYear(end.getFullYear() + 1);
   return now >= start && now <= end;
@@ -83,10 +84,18 @@ function isFestivalOfficial(f) {
 
 // Days until the festival officially starts (0 if already started)
 function daysUntilOfficialStart(f) {
+  const diff = nextOccurrence(f) - today();
+  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+}
+
+// The next date this festival actually begins (this year, or next year if this year's window has passed).
+function nextOccurrence(f) {
   const now = today();
   const start = festivalDate(f, f.startMonth, f.startDay);
-  const diff = start - now;
-  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  const end = festivalDate(f, f.endMonth, f.endDay);
+  if (end < start) end.setFullYear(end.getFullYear() + 1);
+  if (end < now) start.setFullYear(start.getFullYear() + 1);
+  return start;
 }
 
 function hasCrackedToday(key) {
