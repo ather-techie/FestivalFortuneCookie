@@ -25,6 +25,15 @@ function checkApp() {
   assert(css.includes("[data-theme='light']"), 'styles.css: light theme overrides are missing');
   assert(css.includes('--bg:#0f0a1a'), 'styles.css: dark theme base is missing');
 
+  // How It Works view
+  assert(html.includes('view-how'), 'index.html: how view is missing');
+  assert(html.includes('data-view="how"'), 'index.html: how nav tab is missing');
+  assert(html.includes('How It Works'), 'index.html: How It Works heading missing');
+  assert(html.includes('What You Can Do'), 'index.html: What You Can Do heading missing');
+  assert(css.includes('.how-section'), 'styles.css: how-section styles missing');
+  assert(css.includes('.how-steps'), 'styles.css: how-steps styles missing');
+  assert(css.includes('.how-features'), 'styles.css: how-features styles missing');
+
   // Share menu
   assert(html.includes('share-menu'), 'index.html: share menu is missing');
   // About view

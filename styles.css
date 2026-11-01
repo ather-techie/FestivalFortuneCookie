@@ -45,6 +45,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 .about-links{margin-top:0.8rem;display:flex;gap:0.6rem}
 .about-link{background:var(--accent);color:white;padding:.5rem .8rem;border-radius:8px;text-decoration:none;font-family:var(--font-ui)}
 
+/* ===== How It Works ===== */
+.how-section{background:var(--surface);padding:2rem;border-radius:12px;border:1px solid rgba(255,255,255,.04)}
+.how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 2.5rem}
+.how-step{background:var(--surface2);padding:1.5rem;border-radius:12px;border:1px solid rgba(255,255,255,.05)}
+.how-step-icon{font-size:2rem;display:block;margin-bottom:.75rem}
+.how-step h3{font-family:var(--font-ui);font-size:.95rem;font-weight:600;margin-bottom:.5rem;color:var(--accent2)}
+.how-step p{font-size:.85rem;line-height:1.6;color:var(--muted)}
+.how-features{display:flex;flex-direction:column;gap:.75rem;margin-top:1.25rem}
+.how-feature{display:flex;gap:.75rem;align-items:flex-start;background:var(--surface2);padding:.85rem 1.1rem;border-radius:10px;border:1px solid rgba(255,255,255,.04);font-family:var(--font-ui);font-size:.85rem;color:var(--text);line-height:1.5}
+.how-feature strong{color:var(--accent2);font-weight:600}
+[data-theme='light'] .how-section,[data-theme='light'] .how-step,[data-theme='light'] .how-feature{background:var(--surface);border-color:rgba(0,0,0,.06)}
+
 /* ===== Hero ===== */
 .hero{text-align:center;margin-bottom:2.5rem}
 .hero h1{font-size:2rem;margin-bottom:.5rem}
