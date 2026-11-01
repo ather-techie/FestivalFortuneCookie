@@ -2,13 +2,13 @@
 
 // --- Festival registry: loaded from festivals/<key>/ ---
 const FESTIVALS = [
-  { key: 'halloween',      name: 'Halloween',       emoji: '🎃', startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, region: 'Worldwide',       earlyDays: 7 },
-  { key: 'christmas',      name: 'Christmas',       emoji: '🎄', startMonth: 12, startDay: 20, endMonth: 12, endDay: 25, region: 'Worldwide',       earlyDays: 14 },
-  { key: 'diwali',         name: 'Diwali',          emoji: '🪔', startMonth: 10, startDay: 20, endMonth: 11, endDay: 5,  region: 'South Asia',      earlyDays: 7 },
-  { key: 'eid',            name: 'Eid',             emoji: '🌙', startMonth: 4,  startDay: 1,  endMonth: 5,  endDay: 5,  region: 'Muslim-majority regions', earlyDays: 7 },
-  { key: 'lunar-new-year', name: 'Lunar New Year',  emoji: '🐉', startMonth: 1,  startDay: 20, endMonth: 2,  endDay: 10, region: 'East Asia',       earlyDays: 14 },
-  { key: 'valentine',      name: "Valentine's Day", emoji: '💕', startMonth: 2,  startDay: 10, endMonth: 2,  endDay: 15, region: 'Worldwide',       earlyDays: 7 },
-  { key: 'birthday',       name: 'Birthday',        emoji: '🎂', startMonth: 1,  startDay: 1,  endMonth: 12, endDay: 31, region: 'Everywhere',      earlyDays: 0 },
+  { key: 'halloween',      name: 'Halloween',       emoji: '🎃', startMonth: 10, startDay: 25, endMonth: 10, endDay: 31, region: 'Worldwide',       earlyDays: 7,  lateDays: 7 },
+  { key: 'christmas',      name: 'Christmas',       emoji: '🎄', startMonth: 12, startDay: 20, endMonth: 12, endDay: 25, region: 'Worldwide',       earlyDays: 14, lateDays: 14 },
+  { key: 'diwali',         name: 'Diwali',          emoji: '🪔', startMonth: 10, startDay: 20, endMonth: 11, endDay: 5,  region: 'South Asia',      earlyDays: 7,  lateDays: 7 },
+  { key: 'eid',            name: 'Eid',             emoji: '🌙', startMonth: 4,  startDay: 1,  endMonth: 5,  endDay: 5,  region: 'Muslim-majority regions', earlyDays: 7, lateDays: 7 },
+  { key: 'lunar-new-year', name: 'Lunar New Year',  emoji: '🐉', startMonth: 1,  startDay: 20, endMonth: 2,  endDay: 10, region: 'East Asia',       earlyDays: 14, lateDays: 14 },
+  { key: 'valentine',      name: "Valentine's Day", emoji: '💕', startMonth: 2,  startDay: 10, endMonth: 2,  endDay: 15, region: 'Worldwide',       earlyDays: 7,  lateDays: 7 },
+  { key: 'birthday',       name: 'Birthday',        emoji: '🎂', startMonth: 1,  startDay: 1,  endMonth: 12, endDay: 31, region: 'Everywhere',      earlyDays: 0,  lateDays: 0 },
 ];
 
 const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -70,7 +70,12 @@ function isFestivalActive(f) {
   const openDate = new Date(start);
   openDate.setDate(openDate.getDate() - (f.earlyDays || 0));
 
-  return now >= openDate && now <= end;
+  // Extend the active window after the official end.
+  // Some people start/continue celebrating slightly after the main date.
+  const closeDate = new Date(end);
+  closeDate.setDate(closeDate.getDate() + (f.lateDays || 0));
+
+  return now >= openDate && now <= closeDate;
 }
 
 // Is the festival inside its official window (not just the grace period)?
