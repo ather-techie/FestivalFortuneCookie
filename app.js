@@ -39,7 +39,11 @@ function defaultState() {
 function saveState() { localStorage.setItem('ff_state', JSON.stringify(state)); }
 
 // --- Utility ---
-function today() { return new Date(); }
+function today() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
 function dateKey(d) { return d.toISOString().slice(0,10); }
 function ageFromBirthYear(y) { return y ? today().getFullYear() - y : null; }
 function isToday(d) { return dateKey(d) === dateKey(today()); }
