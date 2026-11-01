@@ -36,9 +36,9 @@ function loadFortune(key, id) {
 
 module.exports = function handler(req, res) {
   const { key, id } = req.query;
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'https://festivalfortunecookie.vercel.app';
+  // Always use the production domain — VERCEL_URL points to the internal
+  // deployment URL, which social crawlers cannot fetch.
+  const baseUrl = 'https://festivalfortunecookie.vercel.app';
 
   if (!key || !id) {
     res.setHeader('Location', baseUrl);
