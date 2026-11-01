@@ -2,7 +2,9 @@
 
 A single-page web app where you "crack" a themed fortune cookie for different festivals and birthdays. Each cookie gives one fortune per day, selected by a weighted rarity system.
 
-**Live site:** https://ather-techie.github.io/FestivalFortuneCookie/
+**Live sites:**
+- **Vercel (primary):** https://festivalfortunecookie.vercel.app — includes social media OG image serving
+- **GitHub Pages:** https://ather-techie.github.io/FestivalFortuneCookie/ — static app only (no serverless OG support)
 
 ## What it does
 
@@ -15,6 +17,19 @@ A single-page web app where you "crack" a themed fortune cookie for different fe
 - **Dark / light mode** — Toggle the theme from the header; your preference is saved in localStorage.
 - **Share menu** — Click **Share** to open a menu with options for native sharing, Twitter/X, Facebook, WhatsApp, Telegram, LinkedIn, copy link, or download the PNG card.
 - **Social media cards** — Shared links include Open Graph and Twitter Card meta tags. Each fortune has a pre-rendered 600×800 PNG image that appears as a preview card on social platforms. A Vercel serverless function serves the correct OG tags to crawlers that can't read URL hash fragments.
+
+## Social media sharing: how it works
+
+When a fortune is shared on Twitter/X, Facebook, LinkedIn, or WhatsApp, the platform's crawler fetches the share URL and reads its Open Graph meta tags to build the preview card. Two constraints shaped the design:
+
+1. **Crawlers can't execute JavaScript** and can't read URL hash fragments (`#f=...`), so the share link points to `/api/fortune?key=<festival>&id=<fortune-id>` — a Vercel serverless function that returns HTML with the correct OG tags for that specific fortune, then redirects browsers to the app.
+2. **OG image URLs must be absolute** and publicly fetchable. All OG URLs use the production domain (`https://festivalfortunecookie.vercel.app`) — never deployment-internal URLs, which crawlers can't access.
+
+Preview images are pre-rendered once per fortune (`npm run generate-og`) and served as static files from the CDN edge. If you add or edit fortunes, regenerate the images so the preview cards stay in sync.
+
+To verify a card after sharing:
+- **Twitter/X:** https://cards-dev.twitter.com/validator — also clears Twitter's preview cache
+- **Facebook/Meta:** https://developers.facebook.com/tools/debug/ — click "Scrape Again" to refresh
 
 ## Tech stack
 
@@ -113,8 +128,9 @@ I built this with Mel to show how an AI agent can take a creative idea from conc
 1. **Research first** — Mel searched GitHub for existing fortune-cookie generators to confirm the festival-specific niche was open before writing any code.
 2. **Plan before building** — Mel proposed a numbered plan covering architecture, data model, tone system, and features — and waited for approval before starting.
 3. **Creative writing at scale** — Mel wrote 247 fortunes across seven festivals, each in a distinct voice, with rarity-scaled emotional depth. This is the kind of copy work that would take a human hours and Mel did in minutes.
-4. **Engine + UI + data in one pass** — The JavaScript engine, CSS animations, HTML structure, and all six festival JSON data files were built together so they actually fit.
+4. **Engine + UI + data in one pass** — The JavaScript engine, CSS animations, HTML structure, and all seven festival JSON data files were built together so they actually fit.
 5. **Ship and verify** — Mel created the GitHub repo, GitHub Pages deployment, and Vercel deployment, then confirmed the live URL returned HTTP 200.
-6. **Iterate safely** — When I asked for new features (EID festival, dark/light mode, social sharing), Mel added tests first, then the code, then ran `npm test` to confirm everything passed before committing.
+6. **Iterate safely** — When I asked for new features (EID festival, dark/light mode, social sharing, OG preview cards), Mel added tests first, then the code, then ran `npm test` to confirm everything passed before committing.
+7. **Debug from evidence** — When Twitter previews showed no image, Mel fetched the actual server response, spotted that `VERCEL_URL` was leaking the internal deployment URL into the OG tags, and fixed it in one pass.
 
 The result is a complete, deployed, tested web app — not a prototype or a tutorial fork.
