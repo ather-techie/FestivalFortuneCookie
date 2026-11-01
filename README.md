@@ -111,6 +111,13 @@ This validates all festival JSON files (required fields, rarity weights, unique 
 3. Regenerate OG images: `npm run generate-og`
 4. No code changes needed elsewhere.
 
+## Changelog
+
+- **v1.2** (Nov 2026) — Full date windows on festival cards ("Oct 25 – 31"), region tags, Clear Journal button in the Journal view, year-only birth-year input clarified.
+- **v1.1.1** (Nov 2026) — Social media preview cards: pre-rendered OG images for all 247 fortunes, `og-image`/`twitter:image` meta tags fixed to absolute URLs, Vercel serverless function (`/api/fortune`) serves crawler-friendly OG tags using the production domain.
+- **v1.1** (Nov 2026) — Eid festival (7th), dark/light mode toggle, social share menu (native, Twitter/X, Facebook, WhatsApp, Telegram, LinkedIn, copy link, PNG download), Node test suite (`npm test`).
+- **v1.0** (Oct 2026) — Initial release: six festivals, hold-to-crack with particle burst, weighted rarity system, one-per-day lock, localStorage journal, share cards, GitHub Pages + Vercel deployments.
+
 ## Known limitations
 
 - All state is client-side in `localStorage`. Clearing browser data wipes the journal.
