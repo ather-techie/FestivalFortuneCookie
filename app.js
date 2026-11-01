@@ -424,6 +424,13 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     const view = tab.dataset.view;
     showView(view);
+    if (view === 'home') {
+      // Restore the grid/hero if a crack or reveal stage left them hidden
+      document.getElementById('crack-stage').classList.add('hidden');
+      document.getElementById('reveal-stage').classList.add('hidden');
+      document.getElementById('festival-grid').classList.remove('hidden');
+      document.querySelector('.hero').classList.remove('hidden');
+    }
     if (view === 'journal') renderJournal();
     if (view === 'settings') document.getElementById('birth-year').value = state.birthYear || '';
   });
